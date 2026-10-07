@@ -1,26 +1,38 @@
-import { useState } from 'react'
-import Board from './components/board.jsx'
-import './App.css'
+import {useState} from "react";
+import { DragDropProvider } from "@dnd-kit/react";
+
+import Draggable from "./components/draggable.jsx";
+import Droppable from "./components/droppable.jsx";
 
 function App() {
-  const [board, setBoard] = useState({
-    columns: [
-      { id: 'col-1', title: 'A fazer', cardIds: ['card-1', 'card-2'] },
-      { id: 'col-2', title: 'Em andamento', cardIds: [] },
-      { id: 'col-3', title: 'Concluído', cardIds: [] },
-    ],
-    cards: {
-      'card-1': { id: 'card-1', text: 'Primeira tarefa' },
-      'card-2': { id: 'card-2', text: 'Segunda tarefa' },
-    },
-  })
+    const [isDropped, setIsDropped] = useState(false);
 
-  return (
-      <div className="app">
-        <h1>Quadro de Tarefas</h1>
-        <Board board={board} setBoard={setBoard} />
-      </div>
-  )
+
+    return (
+        <DragDropProvider
+            onDragEnd={(event) => {
+                if (event.canceled) return;
+
+                const {target} = event.operation;
+
+                setIsDropped(target?.id === "droppable");
+        }}>
+
+            <div
+                style={{
+                    display: "flex",
+                    gap: "50px",
+                    padding: "50px",
+                }}
+            >
+                {!isDropped && <Draggable />}
+
+                <Droppable id="droppable">
+                    {isDropped && <Draggable />}
+                </Droppable>
+            </div>
+        </DragDropProvider>
+    );
 }
 
-export default App
+export default App;
