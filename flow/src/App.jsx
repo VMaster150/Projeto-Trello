@@ -5,6 +5,7 @@ import Draggable from "./components/draggable.jsx";
 import Droppable from "./components/droppable.jsx";
 
 import "./styles/App.css"
+import Navbar from "./components/navbar.jsx";
 
 function App() {
     const [cards, setCards] = useState(() => {
@@ -14,52 +15,51 @@ function App() {
             return JSON.parse(cardsSalvos);
         }
 
-        return [
-            {
-                id: "card-1",
-                title: "Estudar React",
-                description: "Aprender os conceitos básicos do React.",
-                column: "todo",
-            },
-            {
-                id: "card-2",
-                title: "Aprender CSS",
-                description: "Praticar Flexbox, Grid e estilização.",
-                column: "todo",
-            },
-            {
-                id: "card-3",
-                title: "Criar layout",
-                description: "Criar a interface inicial do projeto.",
-                column: "doing",
-            },
-            {
-                id: "card-4",
-                title: "Finalizar projeto",
-                description: "Revisar e finalizar o FlowBoard.",
-                column: "done",
-            },
-        ];
+         return [];
+
+
     });
+
+
+    function resetarQuadro() {
+        localStorage.removeItem("flow-cards");
+        localStorage.removeItem("flow-colunas");
+
+        setCards([])
+
+        setColumns([
+            { id: "todo", title: "Iniciar" },
+            { id: "doing", title: "Em Andamento" },
+            { id: "done", title: "Concluído" },
+        ]);
+    }
 
     // =========================
     // COLUNAS
     // =========================
 
-    const [columns, setColumns] = useState([
-        {
-            id: "todo",
-            title: "Iniciar",
-        },
-        {
-            id: "doing",
-            title: "Em Andamento",
-        },
-        {
-            id: "done",
-            title: "Concluído",
-        },
-    ]);
+    const [columns, setColumns] = useState(() => {
+        const salvarColunas = localStorage.getItem("flow-colunas")
+
+            if (salvarColunas) {
+                return JSON.parse(salvarColunas)
+            }
+
+            return [
+                    {
+                        id: "todo",
+                        title: "Iniciar",
+                    },
+                    {
+                        id: "doing",
+                        title: "Em Andamento",
+                    },
+                    {
+                        id: "done",
+                        title: "Concluído",
+                    },
+                ]
+    });
 
     // =========================
     // LOCAL STORAGE DOS CARDS
@@ -68,6 +68,10 @@ function App() {
     useEffect(() => {
         localStorage.setItem("flow-cards", JSON.stringify(cards));
     }, [cards]);
+
+    useEffect(() => {
+        localStorage.setItem("flow-colunas", JSON.stringify(columns));
+    }, [columns]);
 
     // =========================
     // ESTADOS DOS CARDS
@@ -152,6 +156,7 @@ function App() {
                     id={card.id}
                     title={card.title}
                     description={card.description}
+                    onDelete={() => deletar(card.id)}
                 />
             ));
     }
@@ -181,11 +186,11 @@ function App() {
                 );
             }}
         >
+            <Navbar onReset={resetarQuadro} />
+
+
             {/*div das colunas*/}
             <div className="quadro">
-
-                {/*parte das coluna*/}
-
                 {columns.map((column) => (
                     <Droppable
                         key={column.id}
@@ -198,66 +203,56 @@ function App() {
                         {column.id === "todo" && (
                             !isAddingCard ? (
                                 <button
+                                    className="botao-adicionar-card"
                                     onClick={() => setIsAddingCard(true)}
-                                    style={{
-                                        width: "100%",
-                                        padding: "12px",
-                                        marginTop: "15px",
-                                        border: "none",
-                                        borderRadius: "8px",
-                                        cursor: "pointer",
-                                    }}
+
                                 >
                                     + Adicionar card
                                 </button>
                             ) : (
-                                <div style={{ marginTop: "15px" }}>
+                                <div className="formulario-card">
 
                                     <input
                                         type="text"
+                                        className="campo-card"
                                         placeholder="Título do card"
                                         value={newCardTitle}
                                         onChange={(event) =>
                                             setNewCardTitle(event.target.value)
                                         }
-                                        style={{
-                                            width: "100%",
-                                            padding: "10px",
-                                            boxSizing: "border-box",
-                                            marginBottom: "8px",
-                                        }}
                                     />
 
                                     <input
                                         type="text"
+                                        className="campo-card"
                                         placeholder="Descrição do card"
                                         value={newCardDescription}
                                         onChange={(event) =>
-                                            setNewCardDescription(
-                                                event.target.value
-                                            )
+                                            setNewCardDescription(event.target.value)
                                         }
-                                        style={{
-                                            width: "100%",
-                                            padding: "10px",
-                                            boxSizing: "border-box",
-                                            marginBottom: "8px",
-                                        }}
                                     />
 
-                                    <button onClick={addCard}>
-                                        Adicionar
-                                    </button>
+                                    <div className="botoes-formulario">
 
-                                    <button
-                                        onClick={() => {
-                                            setIsAddingCard(false);
-                                            setNewCardTitle("");
-                                            setNewCardDescription("");
-                                        }}
-                                    >
-                                        Cancelar
-                                    </button>
+                                        <button
+                                            className="botao-confirmar"
+                                            onClick={addCard}
+                                        >
+                                            Adicionar
+                                        </button>
+
+                                        <button
+                                            className="botao-cancelar"
+                                            onClick={() => {
+                                                setIsAddingCard(false);
+                                                setNewCardTitle("");
+                                                setNewCardDescription("");
+                                            }}
+                                        >
+                                            Cancelar
+                                        </button>
+
+                                    </div>
 
                                 </div>
                             )
@@ -269,19 +264,13 @@ function App() {
                 {/*Adicionar nova coluna*/}
                 {!isAddingColumn ? (
                     <button
+                        className="botao-adicionar-coluna"
                         onClick={() => setIsAddingColumn(true)}
-                        style={{
-                            minWidth: "150px",
-                            height: "60px",
-                            border: "none",
-                            borderRadius: "10px",
-                            cursor: "pointer",
-                        }}
                     >
                         + Adicionar lista
                     </button>
                 ) : (
-                    <div>
+                    <div className="formulario-coluna">
                         <input
                             type="text"
                             placeholder="Nome da lista"
@@ -291,18 +280,23 @@ function App() {
                             }
                         />
 
-                        <button onClick={addColumn}>
-                            Adicionar
-                        </button>
-
-                        <button
-                            onClick={() => {
-                                setIsAddingColumn(false);
-                                setNewColumnTitle("");
-                            }}
-                        >
-                            Cancelar
-                        </button>
+                        <div className="botoes-coluna">
+                            <button
+                                className="botao-confirmar"
+                                onClick={addColumn}
+                            >
+                                Adicionar
+                            </button>
+                            <button
+                                className="botao-cancelar"
+                                onClick={() => {
+                                    setIsAddingColumn(false);
+                                    setNewColumnTitle("");
+                                }}
+                            >
+                                Cancelar
+                            </button>
+                        </div>
                     </div>
                 )}
 
