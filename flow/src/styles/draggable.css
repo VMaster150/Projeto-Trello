@@ -1,0 +1,133 @@
+/* =========================
+   CARD
+   ========================= */
+
+.card {
+    width: 100%;
+
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+
+    padding: 16px;
+
+    box-shadow: var(--shadow-sm);
+
+    cursor: grab;
+
+    text-align: left;
+
+    position: relative;
+
+    transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            transform 0.2s ease;
+}
+
+/* =========================
+   QUANDO PASSAR O MOUSE
+   ========================= */
+
+.card:hover {
+    border-color: var(--accent);
+
+    box-shadow:
+            0 0 0 1px rgba(139, 92, 246, 0.15),
+            var(--shadow-md);
+}
+
+/* =========================
+   QUANDO ESTÁ SENDO ARRASTADO
+   ========================= */
+
+.card:active {
+    cursor: grabbing;
+}
+
+/* =========================
+   DESTAQUE DO CARD
+   ========================= */
+
+.destaque-card {
+    width: 35px;
+    height: 4px;
+
+    background-color: var(--accent);
+
+    border-radius: 10px;
+
+    margin-bottom: 12px;
+}
+
+/* =========================
+   TÍTULO DO CARD
+   ========================= */
+
+.titulo-card {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--text-primary);
+
+    font-size: 15px;
+    font-weight: 600;
+
+    line-height: 1.4;
+}
+
+/* =========================
+   DESCRIÇÃO DO CARD
+   ========================= */
+
+.descricao-card {
+    display: block;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+/* =========================
+   BOTÃO DE DELETAR
+   ========================= */
+
+.deletar-card {
+    position: absolute;
+
+    top: 8px;
+    right: 8px;
+
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: var(--radius-sm);
+
+    background-color: transparent;
+
+    color: var(--text-muted);
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    transition:
+            background-color 0.2s ease,
+            color 0.2s ease;
+}
+
+.deletar-card:hover {
+    background-color: rgba(239, 68, 68, 0.12);
+
+    color: var(--accent-red);
+}

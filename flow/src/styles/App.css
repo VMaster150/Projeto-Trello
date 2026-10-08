@@ -1,0 +1,15 @@
+.quadro {
+  min-height: 100vh;
+
+  background-color: var(--bg-primary);
+
+  display: flex;
+
+  gap: 24px;
+
+  padding: 40px;
+
+  align-items: flex-start;
+
+  flex-wrap: wrap;
+}
