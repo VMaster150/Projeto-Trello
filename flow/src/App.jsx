@@ -34,9 +34,7 @@ function App() {
         ]);
     }
 
-    // =========================
-    // COLUNAS
-    // =========================
+    // colunas
 
     const [columns, setColumns] = useState(() => {
         const salvarColunas = localStorage.getItem("flow-colunas")
@@ -61,9 +59,7 @@ function App() {
                 ]
     });
 
-    // =========================
-    // LOCAL STORAGE DOS CARDS
-    // =========================
+    /*localstorage*/
 
     useEffect(() => {
         localStorage.setItem("flow-cards", JSON.stringify(cards));
@@ -73,26 +69,16 @@ function App() {
         localStorage.setItem("flow-colunas", JSON.stringify(columns));
     }, [columns]);
 
-    // =========================
-    // ESTADOS DOS CARDS
-    // =========================
+
 
     const [newCardTitle, setNewCardTitle] = useState("");
     const [newCardDescription, setNewCardDescription] = useState("");
     const [newCardPriority, setNewCardPriority] = useState("baixa");
     const [newCardDueDate, setNewCardDueDate] = useState("");
     const [isAddingCard, setIsAddingCard] = useState(false);
-
-    // =========================
-    // ESTADOS DAS COLUNAS
-    // =========================
-
     const [newColumnTitle, setNewColumnTitle] = useState("");
     const [isAddingColumn, setIsAddingColumn] = useState(false);
 
-    // =========================
-    // ADICIONAR CARD
-    // =========================
 
     function addCard() {
         if (!newCardTitle.trim()) return;
@@ -111,17 +97,12 @@ function App() {
             ...currentCards,
             newCard,
         ]);
-
         setNewCardTitle("");
         setNewCardDescription("");
         setNewCardPriority("baixa");
         setNewCardDueDate("");
         setIsAddingCard(false);
     }
-
-    // =========================
-    // ADICIONAR COLUNA
-    // =========================
 
     function addColumn() {
         if (!newColumnTitle.trim()) return;
@@ -140,9 +121,6 @@ function App() {
         setIsAddingColumn(false);
     }
 
-    // =========================
-    // DELETAR CARD
-    // =========================
 
     function deletar(cardId) {
         setCards((currentCards) =>
@@ -150,9 +128,6 @@ function App() {
         );
     }
 
-    // =========================
-    // RENDERIZAR CARDS
-    // =========================
 
     function renderCards(columnId) {
         return cards
@@ -169,10 +144,6 @@ function App() {
                 />
             ));
     }
-
-    // =========================
-    // INTERFACE
-    // =========================
 
     return (
         <DragDropProvider
