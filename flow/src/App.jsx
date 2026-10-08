@@ -3,7 +3,7 @@ import { DragDropProvider } from "@dnd-kit/react";
 
 import Draggable from "./components/draggable.jsx";
 import Droppable from "./components/droppable.jsx";
-
+import ListaTarefas from "./components/listaTarefas.jsx";
 import "./styles/App.css"
 import Navbar from "./components/navbar.jsx";
 
@@ -205,6 +205,11 @@ function App() {
                         key={column.id}
                         id={column.id}
                         title={column.title}
+                        quantidade={
+                            cards.filter(
+                                (card) => card.column === column.id
+                            ).length
+                        }
                     >
                         {renderCards(column.id)}
 
@@ -334,6 +339,11 @@ function App() {
                 )}
 
             </div>
+
+            <ListaTarefas
+                cards={cards}
+                columns={columns}
+            />
         </DragDropProvider>
     );
 }

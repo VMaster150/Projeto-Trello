@@ -2,7 +2,7 @@ import { useDroppable } from "@dnd-kit/react";
 
 import "../styles/droppable.css";
 
-function Droppable({ id, title, children }) {
+function Droppable({ id, title, children, quantidade }) {
     const { ref } = useDroppable({ id });
 
     return (
@@ -11,7 +11,8 @@ function Droppable({ id, title, children }) {
             className="coluna"
         >
             <h2 className="titulo-coluna">
-                {title}
+                <span>{title}</span>
+                <span className="quantidade">{quantidade}</span>
             </h2>
 
             <div className="conteudo-coluna">

@@ -1,0 +1,109 @@
+.lista-tarefas {
+    width: calc(100% - 80px);
+    margin: 0 40px 40px;
+    padding: 24px;
+    box-sizing: border-box;
+
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-md);
+}
+
+.lista-tarefas h2 {
+    margin: 0 0 20px;
+
+    color: var(--text-primary);
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.tarefas-tabela {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tarefa-item {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    align-items: center;
+
+    padding: 14px 16px;
+
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+
+    transition:
+            border-color 0.2s ease,
+            transform 0.2s ease,
+            background-color 0.2s ease;
+}
+
+.tarefa-item:hover {
+    background-color: var(--bg-column);
+    border-color: var(--border-hover);
+    transform: translateY(-1px);
+}
+
+.tarefa-titulo {
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.tarefa-prioridade,
+.tarefa-prazo,
+.tarefa-status {
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.tarefa-prioridade {
+    text-transform: capitalize;
+}
+
+.tarefa-status {
+    text-align: right;
+}
+
+.cabecalho-lista-tarefas {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.cabecalho-lista-tarefas h2 {
+    margin: 0;
+}
+
+.filtro-situacao {
+    padding: 9px 12px;
+
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+
+    font-size: 13px;
+    cursor: pointer;
+
+    outline: none;
+
+    transition:
+            border-color 0.2s ease,
+            background-color 0.2s ease;
+}
+
+.filtro-situacao:hover {
+    border-color: var(--border-hover);
+}
+
+.filtro-situacao:focus {
+    border-color: var(--accent);
+}
