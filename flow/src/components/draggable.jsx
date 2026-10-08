@@ -6,6 +6,8 @@ function Draggable({
                        id,
                        title,
                        description,
+                       priority,
+                        dueDate,
                        onDelete,
                    }) {
     const { ref, transform } = useDraggable({
@@ -31,6 +33,25 @@ function Draggable({
             <span className="descricao-card">
                 {description}
             </span>
+
+            <div className="informacoes-card">
+
+                <span className={`prioridade-card prioridade-${priority}`}>
+                    {priority === "alta" && "🔴 Alta"}
+                    {priority === "media" && "🟡 Média"}
+                    {priority === "baixa" && "🟢 Baixa"}
+                </span>
+
+                {dueDate && (
+                    <span className="prazo-card">
+                        📅 {dueDate}
+                    </span>
+                )}
+
+            </div>
+
+
+
 
             {onDelete && (
                 <button

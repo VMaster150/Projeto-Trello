@@ -79,6 +79,8 @@ function App() {
 
     const [newCardTitle, setNewCardTitle] = useState("");
     const [newCardDescription, setNewCardDescription] = useState("");
+    const [newCardPriority, setNewCardPriority] = useState("baixa");
+    const [newCardDueDate, setNewCardDueDate] = useState("");
     const [isAddingCard, setIsAddingCard] = useState(false);
 
     // =========================
@@ -99,7 +101,10 @@ function App() {
             id: `card-${Date.now()}`,
             title: newCardTitle,
             description: newCardDescription,
+            priority: newCardPriority,
+            dueDate: newCardDueDate,
             column: "todo",
+
         };
 
         setCards((currentCards) => [
@@ -109,6 +114,8 @@ function App() {
 
         setNewCardTitle("");
         setNewCardDescription("");
+        setNewCardPriority("baixa");
+        setNewCardDueDate("");
         setIsAddingCard(false);
     }
 
@@ -156,6 +163,8 @@ function App() {
                     id={card.id}
                     title={card.title}
                     description={card.description}
+                    priority={card.priority}
+                    dueDate={card.dueDate}
                     onDelete={() => deletar(card.id)}
                 />
             ));
@@ -232,6 +241,28 @@ function App() {
                                         }
                                     />
 
+                                    {/*definir a prioridade*/}
+                                    <select
+                                        className="campo-card"
+                                        value={newCardPriority}
+                                        onChange={(event) =>
+                                            setNewCardPriority(event.target.value)
+                                        }
+                                    >
+                                        <option value="baixa">Prioridade baixa</option>
+                                        <option value="media">Prioridade média</option>
+                                        <option value="alta">Prioridade alta</option>
+                                    </select>
+                                    {/*escolher a data*/}
+                                    <input
+                                        type="date"
+                                        className="campo-card"
+                                        value={newCardDueDate}
+                                        onChange={(event) =>
+                                            setNewCardDueDate(event.target.value)
+                                        }
+                                    />
+
                                     <div className="botoes-formulario">
 
                                         <button
@@ -247,6 +278,8 @@ function App() {
                                                 setIsAddingCard(false);
                                                 setNewCardTitle("");
                                                 setNewCardDescription("");
+                                                setNewCardPriority("baixa");
+                                                setNewCardDueDate("")
                                             }}
                                         >
                                             Cancelar
